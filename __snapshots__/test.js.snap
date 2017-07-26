@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic 1`] = `
+<div
+  className="sc-bdVaJa llQRsw"
+/>
+`;
+
+exports[`basic 2`] = `
+<div
+  className="sc-bdVaJa gXhLMb"
+/>
+`;
+
+exports[`variants 1`] = `
+<h1
+  className="sc-bwzfXH bONLXG"
+/>
+`;
+
+exports[`variants 2`] = `
+<h1
+  className="sc-bwzfXH kXifJm"
+/>
+`;

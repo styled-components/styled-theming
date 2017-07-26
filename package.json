@@ -1,0 +1,34 @@
+{
+  "name": "styled-theming",
+  "description": "Create themes for your app using css-in-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:thejameskyle/styled-theming.git",
+  "author": "James Kyle <me@thejameskyle.com>",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "index.js.flow"
+  ],
+  "scripts": {
+    "test": "jest",
+    "example": "browserify -t babelify example/index.js -o example/bundle.js --debug"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "flow-bin": "^0.51.0",
+    "jest": "^20.0.4",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
+    "styled-components": "^2.1.1"
+  },
+  "dependencies": {
+    "create-react-class": "^15.6.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1"
+  }
+}
