@@ -16,7 +16,7 @@ Create a theme for a `<ThemeProvider>`.
 
 `theme` can either be a `string` or a `function` that selects a theme from a set:
 
-```
+```js
 import {createTheme} from 'styled-theming';
 import {ThemeProvider} from 'styled-components';
 
