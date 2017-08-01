@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "test": "jest",
-    "example": "browserify -t babelify example/index.js -o example/bundle.js --debug"
+    "example": "browserify -t babelify example/index.js -o example/bundle.js --debug",
+    "build": "rollup -c && NODE_ENV=production rollup -c",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -26,6 +28,9 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
+    "rollup": "^0.45.2",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-uglify": "^2.0.1",
     "styled-components": "^2.1.1"
   }
 }
