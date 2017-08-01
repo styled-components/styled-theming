@@ -8,12 +8,14 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "index.js.flow"
+    "index.js.flow",
+    "dist/styled-theming.js",
+    "dist/styled-theming.min.js"
   ],
   "scripts": {
     "test": "jest",
     "example": "browserify -t babelify example/index.js -o example/bundle.js --debug",
-    "build": "rollup -c && NODE_ENV=production rollup -c",
+    "build": "rm -rf dist && rollup -c && NODE_ENV=production rollup -c",
     "prepublish": "yarn build"
   },
   "devDependencies": {

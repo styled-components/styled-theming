@@ -5,10 +5,10 @@ let dest;
 let plugins = [commonjs()];
 
 if (process.env.NODE_ENV === 'production') {
-  dest = 'dist/bundle.min.js';
+  dest = 'dist/styled-theming.min.js';
   plugins.push(uglify());
 } else {
-  dest = 'dist/bundle.js';
+  dest = 'dist/styled-theming.js';
 }
 
 export default {
