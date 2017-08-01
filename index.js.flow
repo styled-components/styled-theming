@@ -1,20 +1,13 @@
 // @flow
-export type Themes = { [key: string]: string };
-export type Variants<T: Themes> = { [key: string]: T };
 
-export type Theme<T: Themes> =
-  | $Keys<T>
-  | ((themes: T) => string);
+export type ThemeMap = { [key: string]: string };
+export type VariantMap = { [key: string]: ThemeMap };
 
-export type ThemeSet<T: Themes> =
-  & T
-  & ((props: { theme: Theme<T> }) => string);
+export type ThemeSet = (props: Object) => string;
+export type VariantSet = (props: Object) => string;
 
-export type VariantsThemeSet<K: string, T: Themes, V: Variants<T>> =
-  & V
-  & ((props: { [key: K]: $Keys<V>, theme: Theme<T> }) => string);
-
-declare export function createTheme(theme: Theme<Object>): Object;
-declare export function getThemeValue<T: Themes>(props: { theme: Theme<T> }, themes: T): string;
-declare export function toThemeSet<T: Themes>(themes: T): ThemeSet<T>;
-declare export function toVariantThemeSet<K: string, T: Themes, V: Variants<T>>(key: K, variants: V): VariantsThemeSet<K, T, V>;
+declare export default {
+  (name: string, values: ThemeMap): ThemeSet;
+  variants(name: string, prop: string, values: VariantMap): VariantSet;
+  provider(theme: Object): Object;
+};

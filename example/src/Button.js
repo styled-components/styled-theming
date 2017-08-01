@@ -1,9 +1,9 @@
 // @flow
 import styled from 'styled-components';
-import {toVariantThemeSet} from '../..';
+import theme from '../..';
 import colors from './colors';
 
-const buttonBackgroundColor = toVariantThemeSet('kind', {
+const buttonBackgroundColor = theme.variants('mode', 'kind', {
   default: { light: colors.grayLight, dark: colors.grayDark },
   primary: { light: colors.blueLight, dark: colors.blueDark },
   success: { light: colors.greenLight, dark: colors.greenDark, },
@@ -11,7 +11,7 @@ const buttonBackgroundColor = toVariantThemeSet('kind', {
   danger: { light: colors.redLight, dark: colors.redDark, },
 });
 
-const buttonColor = toVariantThemeSet('kind', {
+const buttonColor = theme.variants('mode', 'kind', {
   default: { light: colors.grayDarker, dark: colors.grayLighter },
   primary: { light: colors.blueDark, dark: colors.blueLight },
   success: { light: colors.greenDark, dark: colors.greenLight },

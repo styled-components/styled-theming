@@ -1,97 +1,162 @@
 # styled-theming
 
-> Create themes for your app using css-in-js
+> Create themes for your app using [styled-components](https://www.styled-components.com/)
 
 ## Installation
 
 ```sh
-yarn add styled-theming
+yarn add styled-components styled-theming
+```
+
+## Example
+
+```js
+import React from 'react';
+import styled, {ThemeProvider} from 'styled-components';
+import theme from 'styled-theming';
+
+const boxBackgroundColor = theme('mode', {
+  light: '#fff',
+  dark: '#000',
+});
+
+const Box = styled.div`
+  background-color: ${boxBackgroundColor};
+`;
+
+export default function App() {
+  return (
+    <ThemeProvider theme={{ mode: 'light' }}>
+      <Box>
+        Hello World
+      </Box>
+    </ThemeProvider>
+  );
+}
 ```
 
 ## API
 
-### `createTheme(theme)`
+### `<ThemeProvider>`
 
-Create a theme for a `<ThemeProvider>`.
+See [styled-components docs](https://www.styled-components.com/docs/advanced#theming)
 
-`theme` can either be a `string` or a `function` that selects a theme from a set:
+`<ThemeProvider>` is part of styled-components, but is required for styled-theming.
 
 ```js
-import {createTheme} from 'styled-theming';
 import {ThemeProvider} from 'styled-components';
-
-<ThemeProvider theme={createTheme('dark')}>
-<ThemeProvider theme={createTheme(themes => themes.dark}>
 ```
 
-### `toThemeSet(themes)`
-
-Create a named set of CSS values where the keys are the names of your themes.
+`<ThemeProvider>` accepts a single prop `theme` which you should pass an object
+with either strings or getter functions. For example:
 
 ```js
-import {toThemeSet} from 'styled-theming';
-import styled from 'styled-components';
+<ThemeProvider theme={{ mode: 'dark', size: 'large' }}>
+<ThemeProvider theme={{ mode: modes => modes.dark, size: sizes => sizes.large }}>
+```
 
-const backgroundColor = toThemeSet({
+You should generally set up a `<ThemeProvider>` at the root of your app:
+
+```js
+function App() {
+  return (
+    <ThemeProvider theme={...}>
+      {/* rest of your app */}
+    </ThemeProvider>
+  );
+}
+```
+
+### `theme(name, values)`
+
+Most of your theming will be done with this function.
+
+`name` should match one of the keys in your `<ThemeProvider>` theme.
+
+```js
+<ThemeProvider theme={{ whatever: '...' }}/>
+
+theme('whatever', {...});
+```
+
+`values` should be an object where one of the keys will be selected by the
+value provided to `<ThemeProvider>` theme.
+
+```js
+<ThemeProvider theme={{ mode: 'light' }}/>
+<ThemeProvider theme={{ mode: 'dark' }}/>
+
+theme('mode', {
+  light: '...',
+  dark: '...',
+});
+```
+
+The values of this object can be any CSS value.
+
+```js
+theme('mode', {
   light: '#fff',
-  dark: '#000'
+  dark: '#000',
 });
 
-const Page = styled.div`
+theme('font', {
+  sansSerif: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+  serif: 'Georgia, Times, "Times New Roman", serif',
+  monoSpaced: 'Consolas, monaco, monospace',
+});
+```
+
+`theme` will create a function that you can use as a value in
+styled-component's `styled` function.
+
+```js
+import styled from 'styled-components';
+import theme from 'styled-theming';
+
+const backgroundColor = theme('mode', {
+  light: '#fff',
+  dark: '#000',
+});
+
+const Box = styled.div`
+  background-color: ${backgroundColor}
+`;
+```
+
+### `theme.variants(name, prop, themes)`
+
+It's often useful to create variants of the same component that are selected
+via an additional prop.
+
+To make this easier with theming, styled-theming provides a `theme.variants`
+function.
+
+```js
+import styled from 'styled-components';
+import theme from 'styled-theming';
+
+const backgroundColor = theme.variants('variant', 'mode', {
+  default: { light: 'gray', dark: 'darkgray' },
+  primary: { light: 'blue', dark: 'darkblue' },
+  success: { light: 'green', dark: 'darkgreen' },
+  warning: { light: 'orange', dark: 'darkorange' },
+});
+
+const Button = styled.button`
   background-color: ${backgroundColor};
 `;
-```
 
-This will return a function that accepts props with a `theme` key that should
-be the theme from `createTheme`. As long as you set up a tool like
-styled-components properly it should just work.
-
-```js
-backgroundColor({ theme: createTheme('dark') });
-```
-
-Additionally, the returned value will have all the key-value pairs from your
-theme set as properties.
-
-```js
-backgroundColor.light === '#fff';
-backgroundColor.dark === '#000';
-```
-
-### `toVariantThemeSet(key, variants)`
-
-It is often useful to have different variants of your components. You could
-implement this yourself on top of `toThemeSet`, but since it is so common
-there's also a provided `toVariantThemeSet`.
-
-Provide a key to use for switching the variant and a named set of themes.
-
-```js
-import styled from 'styled-components';
-import {toVariantThemeSet} from 'styled-theming';
-
-const headingColor = toVariantThemeSet('variant', {
-  default: { light: '#000', dark: '#fff' },
-  fancy: { light: '#f0f', dark: '#f0f' },
-});
-
-const Heading = styled.h1`
-  color: ${headingColor};
-`;
-
-Heading.propTypes = {
-  variant: PropTypes.oneOf(['default', 'fancy'])
+Button.propTypes = {
+  variant: PropTypes.oneOf(['default', 'primary', 'success', 'warning'])
 };
 
-Heading.defaultProps = {
+Button.defaultProps = {
   variant: 'default',
 };
-```
 
-The returned value will have all the key-value pairs from your variant theme
-set as properties.
-
-```js
-headingColor.default === { light: '#fff', dark: '#000' };
-headingColor.fancy === { light: '#f0f', dark: '#f0f' };
+<Button/>
+<Button variant="primary"/>
+<Button variant="success"/>
+<Button variant="warning"/>
 ```

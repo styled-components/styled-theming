@@ -1,40 +1,29 @@
 'use strict';
 
-var React = require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
-
-var INTERNAL_KEY = '__styled_theming_' + (+new Date()) + '__';
-
-exports.createTheme = function(theme) {
-  let obj = {};
-  obj[INTERNAL_KEY] = theme;
-  return obj;
-};
-
-var getThemeValue = exports.getThemeValue = function(props, themes) {
-  var value = props.theme && props.theme[INTERNAL_KEY];
+function getThemeValue(name, props, values) {
+  var value = (
+    props.theme &&
+    props.theme[name]
+  );
 
   if (typeof value === 'function') {
-    return value(themes);
+    return value(values);
   } else {
-    return themes[value];
+    return values[value];
   }
+}
+
+function theme(name, values) {
+  return function(props) {
+    return getThemeValue(name, props, values);
+  };
+}
+
+theme.variants = function(name, prop, values) {
+  return function(props) {
+    var variant = props[prop] && values[props[prop]];
+    return variant && getThemeValue(name, props, variant);
+  };
 };
 
-exports.toThemeSet = function(themes) {
-  function themeSet(props) {
-    return getThemeValue(props, themes);
-  }
-  Object.assign(themeSet, themes);
-  return themeSet;
-};
-
-exports.toVariantThemeSet = function(key, variants) {
-  function variantThemeSet(props) {
-    var variant = props[key] && variants[props[key]];
-    return variant ? getThemeValue(props, variant) : '';
-  }
-  Object.assign(variantThemeSet, variants);
-  return variantThemeSet;
-};
+module.exports = theme;

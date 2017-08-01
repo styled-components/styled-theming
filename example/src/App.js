@@ -1,12 +1,14 @@
 // @flow
 import React from 'react';
-import {ThemeProvider, injectGlobal} from 'styled-components';
-import {createTheme} from '../..';
-
+import styled, {ThemeProvider, injectGlobal} from 'styled-components';
 import Box from './Box';
 import Button from './Button';
 
 injectGlobal`
+  * {
+    box-sizing: border-box;
+  }
+
   html,
   body,
   #root {
@@ -21,24 +23,37 @@ injectGlobal`
   }
 `;
 
+const Code = styled.pre`
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  border: 3px solid;
+  padding: 1em;
+  border-radius: 0.25em;
+`;
+
 export default class App extends React.Component {
   state = {
-    theme: 'light',
+    mode: 'light',
+    size: 'normal',
   };
 
-  handleToggleTheme = () => {
-    this.setState({ theme: this.state.theme === 'light' ? 'dark' : 'light' });
+  handleToggleMode = () => {
+    this.setState({ mode: this.state.mode === 'light' ? 'dark' : 'light' });
+  };
+
+  handleToggleSize = () => {
+    this.setState({ size: this.state.size === 'normal' ? 'large' : 'normal' });
   };
 
   render() {
     return (
-      <ThemeProvider theme={createTheme(this.state.theme)}>
+      <ThemeProvider theme={{ mode: this.state.mode, size: this.state.size }}>
         <Box>
-          <Button onClick={this.handleToggleTheme}>Toggle Theme</Button>
-          <Button kind="primary" onClick={this.handleToggleTheme}>Toggle Theme</Button>
-          <Button kind="success" onClick={this.handleToggleTheme}>Toggle Theme</Button>
-          <Button kind="warning" onClick={this.handleToggleTheme}>Toggle Theme</Button>
-          <Button kind="danger" onClick={this.handleToggleTheme}>Toggle Theme</Button>
+          <h1>styled-theming</h1>
+          <Button onClick={this.handleToggleMode}>Toggle Mode</Button>
+          <Button kind="primary" onClick={this.handleToggleSize}>Toggle Size</Button>
+          <Button kind="success" onClick={this.handleToggleMode}>Toggle Mode</Button>
+          <Button kind="warning" onClick={this.handleToggleSize}>Toggle Size</Button>
+          <Button kind="danger" onClick={this.handleToggleMode}>Toggle Mode</Button>
         </Box>
       </ThemeProvider>
     );
