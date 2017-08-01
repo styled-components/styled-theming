@@ -2,6 +2,8 @@
 
 > Create themes for your app using [styled-components](https://www.styled-components.com/)
 
+Read the [introductory blog post](http://thejameskyle.com/styled-theming.html)
+
 ## Installation
 
 ```sh
