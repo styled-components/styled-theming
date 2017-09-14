@@ -3,7 +3,7 @@
   "description": "Create themes for your app using styled-components",
   "version": "2.1.1",
   "main": "index.js",
-  "repository": "git@github.com:thejameskyle/styled-theming.git",
+  "repository": "git@github.com:styled-components/styled-theming.git",
   "author": "James Kyle <me@thejameskyle.com>",
   "license": "MIT",
   "files": [
