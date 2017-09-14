@@ -109,6 +109,15 @@ theme('font', {
 });
 ```
 
+These values can also be functions that return CSS values.
+
+```js
+theme('mode', {
+  light: props => props.theme.userProfileAccentColor.light,
+  dark: props => props.theme.userProfileAccentColor.dark,
+});
+```
+
 `theme` will create a function that you can use as a value in
 styled-component's `styled` function.
 

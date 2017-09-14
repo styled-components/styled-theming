@@ -15,18 +15,29 @@ test('basic', () => {
     dark: '#000'
   });
 
+  const borderColor = theme('mode', {
+    light: props => props.theme.accent.light,
+    dark: props => props.theme.accent.dark,
+  });
+
   const Page = styled.div`
     background-color: ${backgroundColor};
+    border-color: ${borderColor};
   `;
 
+  const accent = {
+    light: 'skyblue',
+    dark: 'royalblue'
+  };
+
   expect(render(
-    <ThemeProvider theme={{ mode: 'light' }}>
+    <ThemeProvider theme={{ mode: 'light', accent }}>
       <Page/>
     </ThemeProvider>
   )).toMatchSnapshot();
 
   expect(render(
-    <ThemeProvider theme={{ mode: 'dark' }}>
+    <ThemeProvider theme={{ mode: 'dark', accent }}>
       <Page/>
     </ThemeProvider>
   )).toMatchSnapshot();
@@ -35,7 +46,10 @@ test('basic', () => {
 test('variants', () => {
   const headingColor = theme.variants('mode', 'variant', {
     default: { light: '#000', dark: '#fff' },
-    fancy: { light: '#f0f', dark: '#f0f' },
+    fancy: {
+      light: props => props.theme.accent.light,
+      dark: props => props.theme.accent.dark,
+    },
   });
 
   const Heading = styled.h1`
@@ -45,14 +59,19 @@ test('variants', () => {
   Heading.propTypes = { variant: PropTypes.oneOf(['default', 'fancy']) };
   Heading.defaultProps = { variant: 'default' };
 
+  const accent = {
+    light: 'skyblue',
+    dark: 'royalblue'
+  };
+
   expect(render(
-    <ThemeProvider theme={{ mode: 'light' }}>
+    <ThemeProvider theme={{ mode: 'light', accent }}>
       <Heading/>
     </ThemeProvider>
   )).toMatchSnapshot();
 
   expect(render(
-    <ThemeProvider theme={{ mode: 'light' }}>
+    <ThemeProvider theme={{ mode: 'light', accent }}>
       <Heading variant="fancy"/>
     </ThemeProvider>
   )).toMatchSnapshot();

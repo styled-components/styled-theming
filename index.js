@@ -6,10 +6,18 @@ function getThemeValue(name, props, values) {
     props.theme[name]
   );
 
+  var themeValue;
+
   if (typeof value === 'function') {
-    return value(values);
+    themeValue = value(values);
   } else {
-    return values[value];
+    themeValue = values[value];
+  }
+
+  if (typeof themeValue === 'function') {
+    return themeValue(props);
+  } else {
+    return themeValue;
   }
 }
 

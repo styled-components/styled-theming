@@ -2,13 +2,13 @@
 
 exports[`basic 1`] = `
 <div
-  className="sc-bdVaJa llQRsw"
+  className="sc-bdVaJa kRYYUo"
 />
 `;
 
 exports[`basic 2`] = `
 <div
-  className="sc-bdVaJa gXhLMb"
+  className="sc-bdVaJa hCQMZE"
 />
 `;
 
@@ -20,6 +20,6 @@ exports[`variants 1`] = `
 
 exports[`variants 2`] = `
 <h1
-  className="sc-bwzfXH kXifJm"
+  className="sc-bwzfXH eZYJeC"
 />
 `;

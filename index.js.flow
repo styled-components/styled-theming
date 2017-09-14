@@ -1,6 +1,7 @@
 // @flow
 
-export type ThemeMap = { [key: string]: string };
+export type ThemeValue = string | (props: Object) => string;
+export type ThemeMap = { [key: string]: ThemeValue };
 export type VariantMap = { [key: string]: ThemeMap };
 
 export type ThemeSet = (props: Object) => string;
