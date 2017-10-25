@@ -147,7 +147,7 @@ function.
 import styled from 'styled-components';
 import theme from 'styled-theming';
 
-const backgroundColor = theme.variants('variant', 'mode', {
+const backgroundColor = theme.variants('mode', 'variant', {
   default: { light: 'gray', dark: 'darkgray' },
   primary: { light: 'blue', dark: 'darkblue' },
   success: { light: 'green', dark: 'darkgreen' },
