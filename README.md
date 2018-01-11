@@ -135,6 +135,22 @@ const Box = styled.div`
 `;
 ```
 
+The values can also be any CSS blob (just make sure to stay consistent for all modes).
+
+```js
+import styled, {css} from 'styled-components';
+import theme from 'styled-theming';
+
+const stylesByMode = theme('mode', {
+  funky: css`color: #fff; font-weight: bold;`,
+  fun: css`color: #000; font-style: italic;`,
+});
+
+const Box = styled.div`
+  ${stylesByMode}
+`;
+```
+
 ### `theme.variants(name, prop, themes)`
 
 It's often useful to create variants of the same component that are selected
