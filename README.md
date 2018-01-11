@@ -135,19 +135,30 @@ const Box = styled.div`
 `;
 ```
 
-The values can also be any CSS blob (just make sure to stay consistent for all modes).
+The values will be passed through like any other interpolation
+in styled-components. You can use the `css` helper to add entire
+blocks of styles, including their own interpolations.
 
 ```js
 import styled, {css} from 'styled-components';
 import theme from 'styled-theming';
 
-const stylesByMode = theme('mode', {
-  funky: css`color: #fff; font-weight: bold;`,
-  fun: css`color: #000; font-style: italic;`,
+const white = "#fff";
+const black = "#000";
+
+const boxStyles = theme('mode', {
+  light: css`
+    background: ${white};
+    color: ${black};
+  `,
+  dark: css`
+    background: ${black};
+    color: ${white};
+  `,
 });
 
 const Box = styled.div`
-  ${stylesByMode}
+  ${boxStyles}
 `;
 ```
 
