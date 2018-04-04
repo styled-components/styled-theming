@@ -11,7 +11,7 @@ function getThemeValue(name, props, values) {
   if (typeof value === 'function') {
     themeValue = value(values);
   } else {
-    themeValue = values[value];
+    themeValue = values[value] || values.defaultValue;
   }
 
   if (typeof themeValue === 'function') {
