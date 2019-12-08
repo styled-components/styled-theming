@@ -2,3 +2,4 @@ node_modules
 *.log
 example/bundle.js
 dist
+.idea
