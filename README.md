@@ -198,3 +198,24 @@ Button.defaultProps = {
 <Button variant="success"/>
 <Button variant="warning"/>
 ```
+
+if an undefined variant arrives, the default variant is used.
+
+```js
+import styled from 'styled-components';
+import theme from 'styled-theming';
+
+const backgroundColor = theme.variants('mode', 'variant', {
+  default: { light: 'gray', dark: 'darkgray' },
+  primary: { light: 'blue', dark: 'darkblue' },
+  success: { light: 'green', dark: 'darkgreen' },
+  warning: { light: 'orange', dark: 'darkorange' },
+});
+
+const Button = styled.button`
+  background-color: ${backgroundColor};
+`;
+
+<Button variant="noVariant"/> // default
+<Button variant="default"/> // default
+```

@@ -54,6 +54,7 @@ export default class App extends React.Component {
           <Button kind="success" onClick={this.handleToggleMode}>Toggle Mode</Button>
           <Button kind="warning" onClick={this.handleToggleSize}>Toggle Size</Button>
           <Button kind="danger" onClick={this.handleToggleMode}>Toggle Mode</Button>
+          <Button kind="noKind" onClick={this.handleToggleMode}>Toggle Size</Button>
         </Box>
       </ThemeProvider>
     );
