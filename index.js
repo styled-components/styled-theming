@@ -29,7 +29,7 @@ function theme(name, values) {
 
 theme.variants = function(name, prop, values) {
   return function(props) {
-    var variant = props[prop] && values[props[prop]];
+    var variant = typeof props[prop] !== 'undefined' && values[props[prop]];
     return variant && getThemeValue(name, props, variant);
   };
 };
