@@ -12,6 +12,7 @@ yarn add styled-components styled-theming
 
 ## Example
 
+### Without fallback
 ```js
 import React from 'react';
 import styled, {ThemeProvider} from 'styled-components';
@@ -21,6 +22,34 @@ const boxBackgroundColor = theme('mode', {
   light: '#fff',
   dark: '#000',
 });
+
+const Box = styled.div`
+  background-color: ${boxBackgroundColor};
+`;
+
+export default function App() {
+  return (
+    <ThemeProvider theme={{ mode: 'light' }}>
+      <Box>
+        Hello World
+      </Box>
+    </ThemeProvider>
+  );
+}
+```
+
+### With fallback
+When there is no ThemeProvider on top hierarchy of components, you can set the fallback.
+
+```js
+import React from 'react';
+import styled, {ThemeProvider} from 'styled-components';
+import theme from 'styled-theming';
+
+const boxBackgroundColor = theme('mode', {
+  light: '#fff',
+  dark: '#000',
+}, 'light');
 
 const Box = styled.div`
   background-color: ${boxBackgroundColor};
@@ -69,7 +98,7 @@ function App() {
 }
 ```
 
-### `theme(name, values)`
+### `theme(name, values, fallback)`
 
 Most of your theming will be done with this function.
 
@@ -162,7 +191,28 @@ const Box = styled.div`
 `;
 ```
 
-### `theme.variants(name, prop, themes)`
+`fallback` should match one of the keys in your `<ThemeProvider>` theme.
+
+```js
+import styled, { ThemeProvider } from 'styled-components';
+import theme from 'styled-theming';
+
+const backgroundColor = theme('mode', { light: 'lightgray', dark: 'darkgray' }, 'light');
+
+const Button = styled.button`
+  background-color: ${backgroundColor};
+`;
+
+// Example #1 - bg color of this will be lightgray because no ThemeProvider as it's ancestors
+<Button /> 
+
+// Example #2 - bg color of this will be darkgray because it has ThemeProvider with a valid theme prop
+<ThemeProvider theme={{ mode:'dark' }}>
+  <Button />
+</ThemeProvider>
+```
+
+### `theme.variants(name, prop, themes, fallback)`
 
 It's often useful to create variants of the same component that are selected
 via an additional prop.
@@ -171,7 +221,7 @@ To make this easier with theming, styled-theming provides a `theme.variants`
 function.
 
 ```js
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from 'styled-theming';
 
 const backgroundColor = theme.variants('mode', 'variant', {
@@ -179,7 +229,7 @@ const backgroundColor = theme.variants('mode', 'variant', {
   primary: { light: 'blue', dark: 'darkblue' },
   success: { light: 'green', dark: 'darkgreen' },
   warning: { light: 'orange', dark: 'darkorange' },
-});
+}, 'light');
 
 const Button = styled.button`
   background-color: ${backgroundColor};
@@ -193,8 +243,17 @@ Button.defaultProps = {
   variant: 'default',
 };
 
-<Button/>
-<Button variant="primary"/>
-<Button variant="success"/>
-<Button variant="warning"/>
+// Example #1
+<Button /> // bg color of this will be gray(default - light theme) because no ThemeProvider as it's ancestors
+<Button variant="primary" /> // bg color of this will be blue because no ThemeProvider as it's ancestors
+<Button variant="success"/> // bg color of this will be green because no ThemeProvider as it's ancestors
+<Button variant="warning"/> // bg color of this will be orange because no ThemeProvider as it's ancestors
+
+// Example #2
+<ThemeProvider theme={{ mode:'dark' }}>
+  <Button /> // bg color of this will be darkgray because it has ThemeProvider with a valid theme prop
+  <Button variant="primary" /> // bg color of this will be darkblue because it has ThemeProvider with a valid theme prop
+  <Button variant="success"/> // bg color of this will be darkgreen because it has ThemeProvider with a valid theme prop
+  <Button variant="warning"/> // bg color of this will be darkorange because it has ThemeProvider with a valid theme prop
+</ThemeProvider>
 ```

@@ -6,6 +6,11 @@ function getThemeValue(name, props, values) {
     props.theme[name]
   );
 
+  // Fallback mechanism if there is no theme providers on top hierarchy
+  if (!value) {
+    value = fallback;
+  }
+
   var themeValue;
 
   if (typeof value === 'function') {
